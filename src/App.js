@@ -1,10 +1,11 @@
 import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import "./App.css";
+
 import CombatManager from "./containers/CombatManager/CombatManager";
 import Layout from "./containers/Layout/Layout";
 
-function App() {
+
+const app = () => {
     return (
         <BrowserRouter>
             <div className="App">
@@ -16,6 +17,6 @@ function App() {
             </div>
         </BrowserRouter>
     );
-}
+};
 
-export default App;
+export default app;
