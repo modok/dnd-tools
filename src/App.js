@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import "./App.css";
-import CombatManager from "./containers/CombatManager/CombatManager";
+import CombatManager from "./containers/combatManager/CombatManager";
 import Layout from "./containers/Layout/Layout";
 
 function App() {
