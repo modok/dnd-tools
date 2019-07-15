@@ -2,6 +2,7 @@ import React from "react";
 import { Badge } from "reactstrap";
 
 const contender = props => {
+
     return (
         <span>
             <span className="float-left">
@@ -10,7 +11,7 @@ const contender = props => {
             </span>
             <span className="float-right">
                 <Badge color="success">{props.stats.ac}</Badge> &nbsp;
-                 <Badge color="danger">{props.stats.hp}</Badge>
+                <Badge color="danger">{props.stats.hp}</Badge>
             </span>
         </span>
     );
