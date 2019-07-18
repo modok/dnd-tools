@@ -6,6 +6,7 @@ import * as actionTypes from "../../../store/actionTypes";
 class EnemiesManager extends Component {
     state = {
         enemy: {
+            id: "",
             name: "",
             ac: "",
             hp: "",
@@ -19,6 +20,7 @@ class EnemiesManager extends Component {
         const initiative = Math.floor(Math.random() * 20) + bonus;
 
         const contender = {
+            id: this.state.enemy.name + Math.random(),
             name: this.state.enemy.name,
             initiative: initiative,
             ac: this.state.enemy.ac,

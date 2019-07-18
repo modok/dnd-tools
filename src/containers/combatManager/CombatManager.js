@@ -20,7 +20,7 @@ class CombatManager extends Component {
                             <Players players={this.props.players} />
                         </Col>
                         <Col xs="9">
-                            <Contenders contenders={this.props.contenders} />
+                            <Contenders />
                         </Col>
                     </Row>
                 </Container>

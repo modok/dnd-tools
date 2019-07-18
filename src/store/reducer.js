@@ -36,6 +36,18 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 contenders: [...players],
             };
+        case actionTypes.CHANGE_CONTENDER_HP:
+            const contender = action.contender;
+            const updateContenders = state.contenders.map(c => {
+                if (c.id === contender.id) {
+                    return { ...c, hp: contender.hp };
+                }
+                return c;
+            });
+            return {
+                ...state,
+                contenders: [...updateContenders],
+            };
         default:
             return state;
     }

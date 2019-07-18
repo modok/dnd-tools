@@ -22,15 +22,23 @@ class Contenders extends Component {
             : this.setState({ onTurn: 0 });
     };
 
+    onContenderChanged = (id, newValue) => {
+        this.props.onContenderHpChanged(id, newValue);
+    };
+
     render() {
         const listOfContenders = this.props.contenders
             .sort((prev, next) => next.initiative - prev.initiative)
             .map((p, i) => {
-                const onTurn = this.state.onTurn === i ? "warning" : null;
+                const onTurn = (this.state.onTurn) === i ? "warning" : (p.hp <= 0) ? "danger" : null;
                 const key = p.name + Math.random();
+
                 return (
                     <ListGroupItem color={onTurn} key={key}>
-                        <Contender stats={p} />
+                        <Contender
+                            stats={p}
+                            changed={this.onContenderChanged}
+                        />
                     </ListGroupItem>
                 );
             });
@@ -55,13 +63,25 @@ class Contenders extends Component {
     }
 }
 
+const mapStateToProps = state => {
+    return {
+        contenders: state.contenders,
+    };
+};
+
 const mapDispatchToProps = dispatch => {
     return {
         onClear: () => dispatch({ type: actionTypes.CLEAR }),
+        onContenderHpChanged: (id, newValue) => {
+            dispatch({
+                type: actionTypes.CHANGE_CONTENDER_HP,
+                contender: { id: id, hp: newValue },
+            });
+        },
     };
 };
 
 export default connect(
-    null,
+    mapStateToProps,
     mapDispatchToProps
 )(Contenders);
