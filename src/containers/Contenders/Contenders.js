@@ -17,6 +17,15 @@ class Contenders extends Component {
     }
 
     onNextTurn = () => {
+        let nextTurn = this.state.onTurn + 1;
+        if (this.props.contenders.length < nextTurn) {
+            const nextCreatureHp = this.props.contenders[nextTurn];
+            if (nextCreatureHp <= 0) {
+                
+            }
+        } else {
+        }
+        
         this.state.onTurn < this.props.contenders.length - 1
             ? this.setState({ onTurn: this.state.onTurn + 1 })
             : this.setState({ onTurn: 0 });
@@ -30,7 +39,12 @@ class Contenders extends Component {
         const listOfContenders = this.props.contenders
             .sort((prev, next) => next.initiative - prev.initiative)
             .map((p, i) => {
-                const onTurn = (this.state.onTurn) === i ? "warning" : (p.hp <= 0) ? "danger" : null;
+                const onTurn =
+                    this.state.onTurn === i
+                        ? "warning"
+                        : p.hp <= 0
+                        ? "danger"
+                        : null;
                 const key = p.name + Math.random();
 
                 return (
@@ -46,18 +60,17 @@ class Contenders extends Component {
             <div>
                 <div className="d-flex justify-content-center">
                     <Button onClick={this.onNextTurn}>NEXT</Button>
-                    <Button color="danger" onClick={this.props.onClear}>
-                        CLEAR
-                    </Button>
                 </div>
                 <ListGroup>{listOfContenders}</ListGroup>
 
                 <div className="d-flex justify-content-center">
                     <Button onClick={this.onNextTurn}>NEXT</Button>
+                </div>
+                {/* <div className="d-flex justify-content-center">
                     <Button color="danger" onClick={this.props.onClear}>
                         CLEAR
                     </Button>
-                </div>
+                </div> */}
             </div>
         );
     }

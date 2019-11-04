@@ -13,11 +13,11 @@ const contender = props => {
         <span>
             <span className="float-left">
                 <Badge>{props.stats.initiative}</Badge>&nbsp;
+                <Badge color="success">{props.stats.ac}</Badge> &nbsp;
                 <strong>{props.stats.name}:</strong>
             </span>
             <span className="float-right">
-                <Badge color="success">{props.stats.ac}</Badge> &nbsp;
-                <Badge color="danger">{isEditable}</Badge>
+                {isEditable}
             </span>
         </span>
     );

@@ -11,13 +11,14 @@ class EnemiesManager extends Component {
             ac: "",
             hp: "",
             bonus: "",
+            initiative: "",
         },
     };
 
     onSubmitEnemyHanlder = evt => {
         evt.preventDefault();
         const bonus = parseInt(this.state.enemy.bonus) || 0;
-        const initiative = Math.floor(Math.random() * 20) + bonus;
+        const initiative = parseInt(this.state.enemy.initiative) || Math.floor(Math.random() * 20) + bonus;
 
         const contender = {
             id: this.state.enemy.name + Math.random(),
@@ -77,6 +78,15 @@ class EnemiesManager extends Component {
                             onChange={this.onInputChangeHandler}
                             placeholder="bonus/malus"
                             id="bonus"
+                        />
+                    </Col>
+                    <Col>
+                        <Input
+                            type="number"
+                            value={this.state.enemy.initiative}
+                            onChange={this.onInputChangeHandler}
+                            placeholder="fixed initiative"
+                            id="initiative"
                         />
                     </Col>
                     <Col>
