@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Form, FormGroup, Col, Input, Button } from "reactstrap";
 import { connect } from "react-redux";
 import * as actionTypes from "../../../store/actionTypes";
+import CreatureSelector from "./CreatureSelector";
 
 class EnemiesManager extends Component {
     state = {
@@ -18,7 +19,9 @@ class EnemiesManager extends Component {
     onSubmitEnemyHanlder = evt => {
         evt.preventDefault();
         const bonus = parseInt(this.state.enemy.bonus) || 0;
-        const initiative = parseInt(this.state.enemy.initiative) || Math.floor(Math.random() * 20) + bonus;
+        const initiative =
+            parseInt(this.state.enemy.initiative) ||
+            Math.floor(Math.random() * 20) + bonus;
 
         const contender = {
             id: this.state.enemy.name + Math.random(),
@@ -36,7 +39,16 @@ class EnemiesManager extends Component {
         const newValue = evt.target.value;
 
         this.setState({
+            ...this.state,
             enemy: { ...this.state.enemy, [inputId]: newValue },
+        });
+    };
+
+    onCreatureSelected = obj => {
+        console.log(obj);
+        this.setState({
+            ...this.state,
+            enemy: { ...this.state.enemy, ...obj },
         });
     };
 
@@ -54,6 +66,11 @@ class EnemiesManager extends Component {
                         />
                     </Col>
                     <Col>
+                        <CreatureSelector
+                            onSelect={this.onCreatureSelected}
+                        ></CreatureSelector>
+                    </Col>
+                    {/* <Col>
                         <Input
                             type="text"
                             value={this.state.enemy.ac}
@@ -70,7 +87,7 @@ class EnemiesManager extends Component {
                             placeholder="HP"
                             id="hp"
                         />
-                    </Col>
+                    </Col> */}
                     <Col>
                         <Input
                             type="number"
