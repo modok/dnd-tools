@@ -17,15 +17,21 @@ class Contenders extends Component {
     }
 
     onNextTurn = () => {
+        const filteredContenders = this.props.contenders.filter(
+            c => c.initiative > 0 && c.hp > 0
+        );
         let nextTurn = this.state.onTurn + 1;
-        if (this.props.contenders.length < nextTurn) {
+        if (filteredContenders.length < this.state.onTurn) {
+            nextTurn = 0;
+        }
+
+        if (filteredContenders.length < nextTurn) {
             const nextCreatureHp = this.props.contenders[nextTurn];
             if (nextCreatureHp <= 0) {
-                
             }
         } else {
         }
-        
+
         this.state.onTurn < this.props.contenders.length - 1
             ? this.setState({ onTurn: this.state.onTurn + 1 })
             : this.setState({ onTurn: 0 });
@@ -37,6 +43,7 @@ class Contenders extends Component {
 
     render() {
         const listOfContenders = this.props.contenders
+            .filter(c => c.initiative > 0 && c.hp > 0)
             .sort((prev, next) => next.initiative - prev.initiative)
             .map((p, i) => {
                 const onTurn =
@@ -94,7 +101,4 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(Contenders);
+export default connect(mapStateToProps, mapDispatchToProps)(Contenders);

@@ -9,12 +9,17 @@ const contender = props => {
     ) : (
         props.stats.hp
     );
+
+    const getUrl = (tag) => {
+        return "https://www.dndbeyond.com/monsters/" + tag;
+    }
+
     return (
         <span>
             <span className="float-left">
                 <Badge>{props.stats.initiative}</Badge>&nbsp;
                 <Badge color="success">{props.stats.ac}</Badge> &nbsp;
-                <strong>{props.stats.name}:</strong>
+                <strong><a href={getUrl(props.stats.tag)} target="_blank" rel="noopener noreferrer">{props.stats.name}</a>:</strong>
             </span>
             <span className="float-right">
                 {isEditable}

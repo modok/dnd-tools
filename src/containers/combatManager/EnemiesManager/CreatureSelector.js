@@ -1,10 +1,7 @@
 import React, { Component } from "react";
 import Select from "react-select";
 import { Input } from "reactstrap";
-import {
-    monsterEnum,
-    getStatsById,
-} from "../../../services/combatManager/enemiesManager/EnemyCalculator";
+import {connect} from "react-redux";
 
 class CreatureSelector extends Component {
     state = {
@@ -15,18 +12,30 @@ class CreatureSelector extends Component {
         },
     };
 
-    options = [     
-    ];
+    options = [];
 
     componentDidMount() {
-        for(let creature in monsterEnum) {
-            this.options.push({value: creature, label: creature})
+        const creatures = this.props.creatures;
+        for (let i = 0; i <= creatures.length - 1; i++) {
+            this.options.push({ value: creatures[i].name, label: creatures[i].name });
+        }
+    }
+
+    getStatsById = (id) => {
+        const creatures = this.props.creatures;
+        for (let i = 0; i < creatures.length -1; i++) {
+            if(creatures[i].name === id) {
+                return {
+                    ac: creatures[i].ac,
+                    hp: creatures[i].hp,
+                }
+            }
         }
     }
 
     onSelected = valueObj => {
-        if (valueObj.value !== monsterEnum.custom) {
-            this.props.onSelect(getStatsById(valueObj.value));
+        if (valueObj.value !== "custom") {
+            this.props.onSelect({...this.getStatsById(valueObj.value), tag: valueObj.value});
         }
         this.setState({ ...this.state, selected: valueObj.value });
     };
@@ -35,17 +44,25 @@ class CreatureSelector extends Component {
         const inputId = evt.target.id;
         const newValue = evt.target.value;
 
-        if(inputId === 'hp') {
+        if (inputId === "hp") {
             if (!!this.state.enemy.ac) {
-                this.props.onSelect({...this.state.enemy, [inputId]: newValue});
+                this.props.onSelect({
+                    ...this.state.enemy,
+                    [inputId]: newValue,
+                    tag: this.state.selected
+                });
             }
         }
 
-        if(inputId === 'ac') {
+        if (inputId === "ac") {
             if (!!this.state.enemy.hp) {
-                this.props.onSelect({...this.state.enemy, [inputId]: newValue});
+                this.props.onSelect({
+                    ...this.state.enemy,
+                    [inputId]: newValue,
+                    tag: this.state.selected
+                });
             }
-        } 
+        }
 
         this.setState({
             ...this.state,
@@ -55,7 +72,7 @@ class CreatureSelector extends Component {
 
     render() {
         const inputs =
-            this.state.selected === monsterEnum.custom ? (
+            this.state.selected === "custom" ? (
                 <span>
                     <Input
                         type="text"
@@ -72,7 +89,7 @@ class CreatureSelector extends Component {
                         id="hp"
                     />
                 </span>
-            ) : (
+            ) : ( 
                 ""
             );
         return (
@@ -88,4 +105,10 @@ class CreatureSelector extends Component {
     }
 }
 
-export default CreatureSelector;
+const mapStateToProps = state => {
+    return {
+        creatures: state.creatures,
+    }
+}
+
+export default connect(mapStateToProps)(CreatureSelector);

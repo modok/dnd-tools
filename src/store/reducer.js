@@ -1,16 +1,11 @@
 import * as actionTypes from "./actionTypes";
+import players from './playersState';
+import creatures from './creaturesState';
 
 const initialState = {
-    players: [
-        { name: "Uramaki", ac: 19, hp: 49 },
-        { name: "Jhonny", ac: 13, hp: 40 },
-        { name: "Talia", ac: 17, hp: 43 },
-        { name: "Airin", ac: 17, hp: 55 },
-        { name: "Zoltan", ac: 18, hp: 64 },
-        { name: "Jade", ac: 16, hp: 55 },
-        { name: "Raphael", ac: 18, hp: 51 },
-    ],
+    players,
     contenders: [],
+    creatures,
 };
 
 const reducer = (state = initialState, action) => {
@@ -34,7 +29,7 @@ const reducer = (state = initialState, action) => {
             });
             return {
                 ...state,
-                contenders: [...players],
+                contenders: [...state.contenders,...players],
             };
         case actionTypes.CHANGE_CONTENDER_HP:
             const contender = action.contender;

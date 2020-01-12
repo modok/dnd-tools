@@ -13,6 +13,7 @@ class EnemiesManager extends Component {
             hp: "",
             bonus: "",
             initiative: "",
+            tag: "",
         },
     };
 
@@ -21,7 +22,7 @@ class EnemiesManager extends Component {
         const bonus = parseInt(this.state.enemy.bonus) || 0;
         const initiative =
             parseInt(this.state.enemy.initiative) ||
-            Math.floor(Math.random() * 20) + bonus;
+            Math.floor(Math.random() * 20) + 1 + bonus;
 
         const contender = {
             id: this.state.enemy.name + Math.random(),
@@ -29,6 +30,7 @@ class EnemiesManager extends Component {
             initiative: initiative,
             ac: this.state.enemy.ac,
             hp: this.state.enemy.hp,
+            tag: this.state.enemy.tag,
         };
 
         this.props.onAddEnemy(contender);
@@ -45,7 +47,6 @@ class EnemiesManager extends Component {
     };
 
     onCreatureSelected = obj => {
-        console.log(obj);
         this.setState({
             ...this.state,
             enemy: { ...this.state.enemy, ...obj },
@@ -68,26 +69,9 @@ class EnemiesManager extends Component {
                     <Col>
                         <CreatureSelector
                             onSelect={this.onCreatureSelected}
+                            creatures={this.props.creatures}
                         ></CreatureSelector>
                     </Col>
-                    {/* <Col>
-                        <Input
-                            type="text"
-                            value={this.state.enemy.ac}
-                            onChange={this.onInputChangeHandler}
-                            placeholder="AC"
-                            id="ac"
-                        />
-                    </Col>
-                    <Col>
-                        <Input
-                            type="text"
-                            value={this.state.enemy.hp}
-                            onChange={this.onInputChangeHandler}
-                            placeholder="HP"
-                            id="hp"
-                        />
-                    </Col> */}
                     <Col>
                         <Input
                             type="number"
@@ -107,7 +91,7 @@ class EnemiesManager extends Component {
                         />
                     </Col>
                     <Col>
-                        <Button onClick={this.props.onAddContender}>
+                        <Button onClick={this.onSubmitEnemyHanlder}>
                             Add contender
                         </Button>
                     </Col>
@@ -124,7 +108,10 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect(
-    null,
-    mapDispatchToProps
-)(EnemiesManager);
+const mapStateToProps = state => {
+    return {
+        creatures: state.creatures,
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(EnemiesManager);
