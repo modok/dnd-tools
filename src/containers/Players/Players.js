@@ -30,12 +30,12 @@ class Players extends Component {
     };
 
     onResetHandler = () => {
-        const updatePlayerInitiative = {...this.state.playersInitiative};
-        for(let p in updatePlayerInitiative) {
+        const updatePlayerInitiative = { ...this.state.playersInitiative };
+        for (let p in updatePlayerInitiative) {
             updatePlayerInitiative[p].initiative = ""
         }
 
-        this.setState({playersInitiative: updatePlayerInitiative});
+        this.setState({ playersInitiative: updatePlayerInitiative });
     }
 
     render() {
