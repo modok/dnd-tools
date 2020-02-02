@@ -7,13 +7,14 @@ import Contender from "../../components/Contenders/Contender/contender";
 
 class Contenders extends Component {
     state = {
-        onTurn: 0,
+        onTurn: 0
     };
 
     componentDidUpdate() {
         if (this.props.contenders.length === 0 && this.state.onTurn !== 0) {
             this.setState({ onTurn: 0 });
         }
+        this.props.saveToLocalStorage();
     }
 
     onNextTurn = () => {
@@ -50,8 +51,8 @@ class Contenders extends Component {
                     this.state.onTurn === i
                         ? "warning"
                         : p.hp <= 0
-                        ? "danger"
-                        : null;
+                            ? "danger"
+                            : null;
                 const key = p.name + Math.random();
 
                 return (
@@ -73,25 +74,18 @@ class Contenders extends Component {
                 <div className="d-flex justify-content-center">
                     <Button onClick={this.onNextTurn}>NEXT</Button>
                 </div>
-                {/* <div className="d-flex justify-content-center">
+                <div className="d-flex justify-content-center">
                     <Button color="danger" onClick={this.props.onClear}>
                         CLEAR
                     </Button>
-                </div> */}
+                </div>
             </div>
         );
     }
 }
 
-const mapStateToProps = state => {
-    return {
-        contenders: state.contenders,
-    };
-};
-
 const mapDispatchToProps = dispatch => {
     return {
-        onClear: () => dispatch({ type: actionTypes.CLEAR }),
         onContenderHpChanged: (id, newValue) => {
             dispatch({
                 type: actionTypes.CHANGE_CONTENDER_HP,
@@ -101,4 +95,4 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Contenders);
+export default connect(null, mapDispatchToProps)(Contenders);

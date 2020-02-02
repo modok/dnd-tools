@@ -9,6 +9,12 @@ import EnemiesManager from "./EnemiesManager/EnemiesManager";
 
 class CombatManager extends Component {
     render() {
+        const cachedContenders = JSON.parse(localStorage.getItem('contenders'));
+        const contenders =
+            this.props.contenders.length !== 0 ?
+                this.props.contenders :
+                cachedContenders ? cachedContenders : [];
+
         return (
             <div>
                 <Jumbotron>
@@ -20,12 +26,21 @@ class CombatManager extends Component {
                             <Players players={this.props.players} />
                         </Col>
                         <Col xs="9">
-                            <Contenders />
+                            <Contenders contenders={contenders} saveToLocalStorage={this.saveToLocalStorage} onClear={this.clearAll} />
                         </Col>
                     </Row>
                 </Container>
             </div>
         );
+    }
+
+    saveToLocalStorage = () => {
+        localStorage.setItem('contenders', JSON.stringify(this.props.contenders));
+    }
+
+    clearAll = () => {
+        localStorage.removeItem('contenders');
+        this.props.onClear();
     }
 }
 
@@ -38,6 +53,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
+        onClear: () => {
+            dispatch({ type: actionTypes.CLEAR });
+        },
         onAddContender: () =>
             dispatch({
                 type: actionTypes.ADD_CONTENDER,
