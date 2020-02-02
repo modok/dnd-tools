@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import CombatManager from "./containers/combatManager/CombatManager";
+import CombatManager from "./containers/CombatManager/CombatManager";
 import Layout from "./containers/Layout/Layout";
 
 
