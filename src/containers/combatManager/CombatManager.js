@@ -51,7 +51,6 @@ class CombatManager extends Component {
     clearAll = () => {
         localStorage.removeItem('contenders');
         this.props.onClear();
-        this.forceUpdate();
     }
 }
 
