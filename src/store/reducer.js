@@ -29,7 +29,7 @@ const reducer = (state = initialState, action) => {
             });
             return {
                 ...state,
-                contenders: [...state.contenders,...players],
+                contenders: [...state.contenders, ...players],
             };
         case actionTypes.CHANGE_CONTENDER_HP:
             const contender = action.contender;
@@ -43,6 +43,12 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 contenders: [...updateContenders],
             };
+        case actionTypes.STATE_RESTORE:
+            const contenders = action.contenders;
+            return {
+                ...state,
+                contenders
+            }
         default:
             return state;
     }

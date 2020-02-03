@@ -8,12 +8,22 @@ import Players from "../Players/Players";
 import EnemiesManager from "./EnemiesManager/EnemiesManager";
 
 class CombatManager extends Component {
+    constructor() {
+        super();
+        this.cachedContenders = JSON.parse(localStorage.getItem('contenders'));
+    };
+
+    componentDidMount() {
+        if (this.cachedContenders) {
+            this.props.onStateRestore(this.cachedContenders);
+        }
+    }
+
     render() {
-        const cachedContenders = JSON.parse(localStorage.getItem('contenders'));
         const contenders =
             this.props.contenders.length !== 0 ?
                 this.props.contenders :
-                cachedContenders ? cachedContenders : [];
+                this.cachedContenders ? this.cachedContenders : [];
 
         return (
             <div>
@@ -56,6 +66,11 @@ const mapDispatchToProps = dispatch => {
         onClear: () => {
             dispatch({ type: actionTypes.CLEAR });
         },
+        onStateRestore: (cachedContenders) =>
+            dispatch({
+                type: actionTypes.STATE_RESTORE,
+                contenders: cachedContenders
+            }),
         onAddContender: () =>
             dispatch({
                 type: actionTypes.ADD_CONTENDER,
